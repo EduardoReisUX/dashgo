@@ -30,10 +30,11 @@ export function Header() {
         <IconButton
           aria-label="Open navigation"
           icon={<Icon as={RiMenuLine} />}
+          display={"flex"}
+          alignItems={"center"}
           fontSize={"24"}
           variant={"unstyled"}
           onClick={onOpen}
-          mt={"3"}
           mr={"2"}
         />
       )}
