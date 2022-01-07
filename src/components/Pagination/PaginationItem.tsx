@@ -38,7 +38,7 @@ export function PaginationItem({
         bgColor: "gray.500",
       }}
     >
-      2
+      {number}
     </Button>
   );
 }
