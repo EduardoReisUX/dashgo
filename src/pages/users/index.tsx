@@ -13,9 +13,9 @@ import {
   Td,
   Text,
   useBreakpointValue,
-  TableCaption,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import { useEffect } from "react";
 import { RiAddLine, RiPencilLine } from "react-icons/ri";
 import { Header } from "../../components/Header";
 import { Pagination } from "../../components/Pagination";
@@ -26,6 +26,13 @@ export default function UserList() {
     base: false,
     lg: true,
   });
+
+  // Fetch fake data from mirage in services/mirage
+  useEffect(() => {
+    fetch("http://localhost:3000/api/users")
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+  }, []);
 
   return (
     <Box>
@@ -40,7 +47,7 @@ export default function UserList() {
               Usuários
             </Heading>
 
-            <Link href="users/create" passHref>
+            <Link href="/users/create" passHref>
               <Button
                 as="a"
                 size={"sm"}

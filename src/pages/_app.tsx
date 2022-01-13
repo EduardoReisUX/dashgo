@@ -6,6 +6,7 @@ import { SidebarDrawerProvider } from "../contexts/SidebarDrawerContext";
 
 import { makeServer } from "../services/mirage";
 
+// If it's a development server, start miragejs fake api
 if (process.env.NODE_ENV === "development") {
   makeServer();
 }
