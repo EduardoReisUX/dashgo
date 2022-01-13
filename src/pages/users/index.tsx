@@ -18,8 +18,6 @@ import {
 
 import Link from "next/link";
 
-import { useEffect } from "react";
-
 import { useQuery } from "react-query";
 
 import { RiAddLine, RiPencilLine } from "react-icons/ri";
@@ -29,24 +27,32 @@ import { Pagination } from "../../components/Pagination";
 import { Sidebar } from "../../components/Sidebar";
 
 export default function UserList() {
-  // Fetch fake data from mirage in services/mirage
-  const { data, isLoading, error } = useQuery("users", async () => {
-    const response = await fetch("http://localhost:3000/api/users");
-    const data = await response.json();
+  // useQuery fetch and cache fake data
+  // from mirage in services/mirage
+  // stale while revalidate — revalidate on focus
+  const { data, isLoading, error } = useQuery(
+    "users",
+    async () => {
+      const response = await fetch("http://localhost:3000/api/users");
+      const data = await response.json();
 
-    const users = data.users.map((user) => ({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      createdAt: new Date(user.createdAt).toLocaleDateString("pt-BR", {
-        day: "2-digit",
-        month: "long",
-        year: "numeric",
-      }),
-    }));
+      const users = data.users.map((user) => ({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        createdAt: new Date(user.createdAt).toLocaleDateString("pt-BR", {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        }),
+      }));
 
-    return users;
-  });
+      return users;
+    },
+    {
+      staleTime: 1000 * 5, // data will be fresh for 5 seconds
+    }
+  );
 
   const isDesktopVersion = useBreakpointValue({
     base: false,
