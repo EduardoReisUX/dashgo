@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === "development") {
   makeServer();
 }
 
-// Provider of react-query
+// react-query needs a QueryClientProvider to work
 const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }: AppProps) {
