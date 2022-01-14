@@ -8,8 +8,19 @@ type User = {
   createdAt: string;
 };
 
-export async function getUsers(): Promise<User[]> {
-  const { data } = await api.get("/users");
+type GetUsersResponse = {
+  totalCount: number;
+  users: User[];
+};
+
+export async function getUsers(page: number): Promise<GetUsersResponse> {
+  const { data, headers } = await api.get("/users", {
+    params: {
+      page,
+    },
+  });
+
+  const totalCount = Number(headers["x-total-count"]);
 
   const users = data.users.map((user) => ({
     id: user.id,
@@ -22,15 +33,14 @@ export async function getUsers(): Promise<User[]> {
     }),
   }));
 
-  return users;
+  return { users, totalCount };
 }
 
-export function useUsers() {
-  // useQuery fetch and cache fake data
-  // from mirage in services/mirage
-  // stale while revalidate — revalidate on focus
-  // data will be fresh for 5 seconds
-  return useQuery("users", getUsers, {
+export function useUsers(page: number) {
+  // It's important identify every page of users so that the
+  // react-query doesn't think it's the same data as "users"
+  // ["users", 1], ["users", 2], ["users", 3], ...
+  return useQuery(["users", page], () => getUsers(page), {
     staleTime: 1000 * 5,
   });
 }

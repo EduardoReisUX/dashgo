@@ -31,9 +31,9 @@ export function makeServer() {
       }),
     },
 
-    // Creates 10 users according to the user factory
+    // Creates 200 users according to the user factory
     seeds(server) {
-      server.createList("user", 10);
+      server.createList("user", 200);
     },
 
     // Creates '/api/users' route of method GET and POST with delay of 750ms
