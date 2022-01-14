@@ -18,41 +18,16 @@ import {
 
 import Link from "next/link";
 
-import { useQuery } from "react-query";
-
 import { RiAddLine, RiPencilLine } from "react-icons/ri";
 
 import { Header } from "../../components/Header";
 import { Pagination } from "../../components/Pagination";
 import { Sidebar } from "../../components/Sidebar";
-import { api } from "../../services/axios";
+
+import { useUsers } from "../../services/hooks/useUsers";
 
 export default function UserList() {
-  // useQuery fetch and cache fake data
-  // from mirage in services/mirage
-  // stale while revalidate — revalidate on focus
-  const { data, isLoading, isFetching, error, refetch } = useQuery(
-    "users",
-    async () => {
-      const { data } = await api.get("/users");
-
-      const users = data.users.map((user) => ({
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        createdAt: new Date(user.createdAt).toLocaleDateString("pt-BR", {
-          day: "2-digit",
-          month: "long",
-          year: "numeric",
-        }),
-      }));
-
-      return users;
-    },
-    {
-      staleTime: 1000 * 5, // data will be fresh for 5 seconds
-    }
-  );
+  const { data, isLoading, isFetching, error, refetch } = useUsers();
 
   const isDesktopVersion = useBreakpointValue({
     base: false,
