@@ -30,7 +30,7 @@ export default function UserList() {
   // useQuery fetch and cache fake data
   // from mirage in services/mirage
   // stale while revalidate — revalidate on focus
-  const { data, isLoading, error } = useQuery(
+  const { data, isLoading, isFetching, error, refetch } = useQuery(
     "users",
     async () => {
       const response = await fetch("http://localhost:3000/api/users");
@@ -70,7 +70,23 @@ export default function UserList() {
           <Flex mb={"8"} justify={"space-between"} align={"center"}>
             <Heading size={"lg"} fontWeight={"normal"}>
               Usuários
+              {!isLoading && isFetching && (
+                <Spinner size={"sm"} color="gray.500" ml={4} />
+              )}
             </Heading>
+
+            <Button
+              size={"sm"}
+              variant={"link"}
+              fontSize={"sm"}
+              colorScheme={"pink"}
+              p={{ base: 2, lg: 4 }}
+              mr={4}
+              ml={"auto"}
+              onClick={() => refetch()}
+            >
+              Atualizar dados
+            </Button>
 
             <Link href="/users/create" passHref>
               <Button
@@ -125,11 +141,10 @@ export default function UserList() {
                       {isDesktopVersion && <Td>{user.createdAt}</Td>}
                       <Td>
                         <Button
-                          as="a"
                           size={"sm"}
                           fontSize={"sm"}
                           colorScheme={"pink"}
-                          variant={"ghost"}
+                          variant={"link"}
                           leftIcon={<Icon as={RiPencilLine} fontSize={"16"} />}
                         >
                           Editar
