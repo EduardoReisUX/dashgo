@@ -41,6 +41,6 @@ export function useUsers(page: number) {
   // react-query doesn't think it's the same data as "users"
   // ["users", 1], ["users", 2], ["users", 3], ...
   return useQuery(["users", page], () => getUsers(page), {
-    staleTime: 1000 * 5,
+    staleTime: 1000 * 60 * 10, // 10 minutes
   });
 }
