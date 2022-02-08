@@ -13,9 +13,11 @@ const siblingsCount = 1;
 /**
   returns an array from the param from + 1 to param to.
 
-      Examples:
-        generatePagesArray(2, 5) => [3, 4, 5]
-        generatePagesArray(0, 10) => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  Examples:
+  
+    generatePagesArray(2, 5) => [3, 4, 5]
+
+    generatePagesArray(0, 10) => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   @params from: number, to: number
 */
 function generatePagesArray(from: number, to: number) {
@@ -54,7 +56,9 @@ export function Pagination({
       align={"center"}
     >
       <Box>
-        <strong>0</strong> - <strong>10</strong> de <strong>100</strong>
+        <strong>{registersPerPage * (currentPage - 1) + 1}</strong> -{" "}
+        <strong>{registersPerPage * currentPage}</strong> de{" "}
+        <strong>{totalCountOfRegisters}</strong>
       </Box>
       <Stack direction={"row"} spacing={"2"}>
         {currentPage > 1 + siblingsCount && (
