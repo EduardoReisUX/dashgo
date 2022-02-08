@@ -1,10 +1,11 @@
-import { Button, Flex, Stack } from "@chakra-ui/react";
+import { Button, Flex, Stack, useToast } from "@chakra-ui/react";
 
 import { FieldError, SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Input } from "../components/Form/Input";
+import { useRouter } from "next/router";
 
 type SignInFormData = {
   email: string;
@@ -18,6 +19,8 @@ const signInFormSchema = yup.object().shape({
 });
 
 export default function SignIn() {
+  const { push } = useRouter();
+  const toast = useToast();
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(signInFormSchema),
   });
@@ -25,7 +28,17 @@ export default function SignIn() {
   const handleSignIn: SubmitHandler<SignInFormData> = async (data, event) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
+    const regex = /[^@]+/;
+    const usuario = regex.exec(data.email)[0];
+    toast({
+      title: "Login realizado com sucesso.",
+      description: `Sendo redirecionando para página Dashboard como ${usuario}.`,
+      status: "success",
+    });
+
     console.log(data);
+    await new Promise((resolve) => setTimeout(resolve, 3500));
+    push("/dashboard");
   };
 
   return (
