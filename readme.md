@@ -76,9 +76,11 @@ $ yarn dev
 
 ## 👀 Espiadinha
 
-<p align="center">
-<img src="github/ignews-demo.gif" alt="Demonstração do projeto"></img>
-</p>
+🚧 _Quase feito..._
+
+<!-- <p align="center">
+<img src="github/upFi-demo.gif" alt="Demonstração do projeto"></img>
+</p> -->
 
 ---
 
