@@ -68,6 +68,7 @@ export default function CreateUser() {
   });
 
   const handleCreateUser: SubmitHandler<CreateUserFormData> = async (data) => {
+    //@ts-ignore
     await createUser.mutateAsync(data);
   };
 
@@ -125,7 +126,7 @@ export default function CreateUser() {
 
           <Flex mt={"8"} justify={"flex-end"}>
             <HStack spacing={"4"}>
-              <Link href="/users">
+              <Link href="/users" passHref>
                 <Button colorScheme={"whiteAlpha"} variant={"ghost"}>
                   Cancelar
                 </Button>
